@@ -19,6 +19,7 @@ export default {
 
 <style scoped>
 .wrapper{
+  height: 600px;
   text-align: center;
 }
 .title {
