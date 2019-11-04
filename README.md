@@ -6,17 +6,8 @@
 后端接口使用[Mockjs](http://mockjs.com)模拟
 
 ---
-### 效果图：   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/home.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/staff.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/staffEdit.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/stock.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/stockEdit.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/in.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/inEdit.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/out.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/outEdit.png" />   
-<img src="https://github.com/Hyung7/warehouse-management/blob/master/pic/search.png" />   
+### 效果展示：  
+[https://hyung7.github.io/warehouse-management/#/home](https://hyung7.github.io/warehouse-management/#/home) 
 
 ---
 ## Project setup
