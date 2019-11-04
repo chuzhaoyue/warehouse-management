@@ -3,21 +3,12 @@
     <el-aside class="sidebar" width="200px">
       <el-header class="left-header">食品仓库管理</el-header>
       <el-menu class="el-menu-vertical-demo" router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-        <el-submenu index="1">
+        <el-submenu v-for="firstMenu in menuList" :key="firstMenu.path" :index="firstMenu.path">
           <template slot="title">
-            <i class="el-icon-user"></i>
-            <span>基础信息</span>
+            <i :class="firstMenu.icon"></i>
+            <span>{{firstMenu.name}}</span>
           </template>
-          <el-menu-item index="1-1" route="/basic/staff-list">员工管理</el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-user"></i>
-            <span>仓库管理</span>
-          </template>
-          <el-menu-item index="2-1" route="/warehouse/stock">库存信息</el-menu-item>
-          <el-menu-item index="2-2" route="/warehouse/in-list">入库信息</el-menu-item>
-          <el-menu-item index="2-3" route="/warehouse/out-list">出库信息</el-menu-item>
+          <el-menu-item v-for="secondMenu in firstMenu.children" :key="secondMenu.path" :index="secondMenu.path">{{secondMenu.name}}</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -40,6 +31,24 @@ export default {
   name: 'index',
   data () {
     return {
+      menuList: [
+        {
+          name: '基础信息',
+          icon: 'el-icon-user',
+          path: '/basic',
+          children: [{ name: '员工管理', path: '/basic/staff-list' }]
+        },
+        {
+          name: '仓库管理',
+          icon: 'el-icon-edit-outline',
+          path: '/warehouse',
+          children: [
+            { name: '库存信息', path: '/warehouse/stock' },
+            { name: '入库信息', path: '/warehouse/in-list' },
+            { name: '出库信息', path: '/warehouse/out-list' }
+          ]
+        }
+      ]
     }
   },
   computed: {
@@ -88,7 +97,7 @@ export default {
   height: 0px;
   line-height: 60px;
 }
-.mushroom{
+.mushroom {
   float: right;
   width: 30px;
   height: 30px;

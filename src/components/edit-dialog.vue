@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted () {
-    // form组件，（卸载return里显示不出，可能是因为加载慢？）
+    // form组件，（写在return里显示不出，可能是因为加载慢？）
     this.pages = {
       staff: { comp: Staff, width: '800px' },
       stock: { comp: Stock, width: '450px' },

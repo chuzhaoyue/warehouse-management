@@ -1,14 +1,14 @@
 import Mock from 'mockjs'
 
 // url正则匹配
-var url = {
+const url = {
   searchUrl: /^\/(Staff|In|Out|Stock)\/Search$/,
   singleUrl: /^\/(Staff|In|Out|Stock)\/Single\/\d+$/,
   saveUrl: /^\/(Staff|In|Out|Stock)\/Save$/,
   deleteUrl: /^\/(Staff|In|Out|Stock)\/Delete\/\d+$/,
 };
 
-var allInfo = {
+const allInfo = {
   Staff: 'staffInfo',
   Stock: 'stockInfo',
   In: 'inInfo',
@@ -18,13 +18,13 @@ var allInfo = {
 // 拦截Search
 Mock.mock(url.searchUrl, 'post', function (options) {
   // 判断请求的是哪个url（Staff/Stock/In/Out）
-  var name = options.url.split('/')[1];
-  var info = JSON.parse(localStorage.getItem('warehouseInfo'))[allInfo[name]];
+  const name = options.url.split('/')[1];
+  const info = JSON.parse(localStorage.getItem('warehouseInfo'))[allInfo[name]];
   if (!options.body) {
     return info;
   } else {
     // 返回匹配的查询信息
-    var reg = new RegExp(options.body);
+    const reg = new RegExp(options.body);
     if (name === 'Staff' || name === 'Stock') {
       return info.filter(item => reg.test(item.name));
     } else {
@@ -35,23 +35,23 @@ Mock.mock(url.searchUrl, 'post', function (options) {
 
 // 拦截Single
 Mock.mock(url.singleUrl, 'get', function (options) {
-  var name = options.url.split('/')[1];
-  var info = JSON.parse(localStorage.getItem('warehouseInfo'))[allInfo[name]];
-  var id = options.url.split('/').pop();
-  return (info.filter(item => item.id == id))[0]; // 返回id匹配的信息
+  const name = options.url.split('/')[1];
+  const info = JSON.parse(localStorage.getItem('warehouseInfo'))[allInfo[name]];
+  const id = options.url.split('/').pop();
+  return (info.find(item => item.id == id)); // 返回id匹配的信息
 })
 
 // 拦截Save（修改）
 Mock.mock(url.saveUrl, 'put', function (options) {
-  var name = options.url.split('/')[1];
-  var warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
-  var attr = allInfo[name];
-  var info = JSON.parse(options.body);
+  const name = options.url.split('/')[1];
+  const attr = allInfo[name];
+  let warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
+  let info = JSON.parse(options.body);
   if (name === 'In' || name === 'Out') {
-    var wstaff = warehouseInfo.staffInfo;
-    var wstock = warehouseInfo.stockInfo;
-    var win = warehouseInfo.inInfo;
-    var wout = warehouseInfo.outInfo;
+    let wstaff = warehouseInfo.staffInfo;
+    let wstock = warehouseInfo.stockInfo;
+    let win = warehouseInfo.inInfo;
+    let wout = warehouseInfo.outInfo;
     // 根据食品id、操作人id设置食品名称、厂家、操作员
     info.foodName = wstock[info.foodId - 1].name;
     info.brand = wstock[info.foodId - 1].brand;
@@ -71,15 +71,15 @@ Mock.mock(url.saveUrl, 'put', function (options) {
 
 // 拦截Save（新增）
 Mock.mock(url.saveUrl, 'post', function (options) {
-  var name = options.url.split('/')[1];
-  var warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
-  var attr = allInfo[name];
-  var info = JSON.parse(options.body);
+  const name = options.url.split('/')[1];
+  const attr = allInfo[name];
+  let warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
+  let info = JSON.parse(options.body);
   if (name === 'Stock') {
     info.stock = 0;
   } else if (name === 'In' || name === 'Out') {
-    var wstaff = warehouseInfo.staffInfo;
-    var wstock = warehouseInfo.stockInfo;
+    let wstaff = warehouseInfo.staffInfo;
+    let wstock = warehouseInfo.stockInfo;
     // 根据食品id、操作人id设置食品名称、厂家、操作员
     info.foodName = wstock[info.foodId - 1].name;
     info.brand = wstock[info.foodId - 1].brand;
@@ -98,9 +98,9 @@ Mock.mock(url.saveUrl, 'post', function (options) {
 
 // 拦截Delete
 Mock.mock(url.deleteUrl, 'delete', function (options) {
-  var name = options.url.split('/')[1];
-  var warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
-  var id = options.url.split('/').pop();
+  const name = options.url.split('/')[1];
+  const id = options.url.split('/').pop();
+  let warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
   warehouseInfo[allInfo[name]][id - 1].isDelete = true; // 将isDelete设置为true
   localStorage.setItem('warehouseInfo', JSON.stringify(warehouseInfo));
 })

@@ -1,6 +1,4 @@
-import {
-  $http
-} from './index.api';
+import { $http } from './index.api';
 
 class CommonApi {
   constructor(name) {
