@@ -101,6 +101,16 @@ Mock.mock(url.deleteUrl, 'delete', function (options) {
   const name = options.url.split('/')[1];
   const id = options.url.split('/').pop();
   let warehouseInfo = JSON.parse(localStorage.getItem('warehouseInfo'));
+  if (name === 'In' || name === 'Out') {
+    let wstock = warehouseInfo.stockInfo;
+    if (name === 'In') {
+      let info = warehouseInfo.inInfo[id - 1]
+      wstock[info.foodId - 1].stock -=info.quantity; // 更新库存
+    } else {
+      let info = warehouseInfo.outInfo[id - 1]
+      wstock[info.foodId - 1].stock = Number(wstock[info.foodId - 1].stock) + Number(info.quantity); // 更新库存
+    }
+  }
   warehouseInfo[allInfo[name]][id - 1].isDelete = true; // 将isDelete设置为true
   localStorage.setItem('warehouseInfo', JSON.stringify(warehouseInfo));
 })
