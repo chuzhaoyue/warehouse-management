@@ -55,7 +55,7 @@
 
 export default {
   name: 'staff',
-  props: { info: Object, isSave: Boolean },
+  props: { info: Object },
   data () {
     return {
       modelInfo: {},
@@ -89,23 +89,20 @@ export default {
     // form信息
     info (val) {
       this.modelInfo = val;
-    },
-    // 是否保存
-    isSave () {
-      if (this.isSave) {
-        this.save();
-      }
     }
   },
-  mounted () { },
+  created () {
+    this.$bus.on('readySave', this.readySave);
+  },
+  beforeDestroy () {
+    this.$bus.off('readySave');
+  },
   methods: {
     // 保存，向父组件传递数据，请父组件调用方法保存
-    save () {
+    readySave () {
       this.$refs.modelInfo.validate((valid) => {
         if (valid) {
-          this.$emit('saveInfo', this.modelInfo);
-        } else {
-          this.$emit('notRule');
+          this.$bus.emit('save', this.modelInfo);
         }
       });
     }

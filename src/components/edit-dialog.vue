@@ -2,10 +2,10 @@
   <div>
     <el-dialog :title="title" v-loading="loading" style="text-align:left" :width="dialogWidth" :visible.sync="dialogVisible" @close="cancel">
       <!-- <in-or-out :info="info" :isSave="isSave" v-on:saveInfo="onSave"></in-or-out> -->
-      <component :is="comp" :info="info" :isSave="isSave" @saveInfo="onSave" @notRule="notRule"></component>
+      <component :is="comp" :info="info"></component>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button type="primary" @click="onSave">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -24,7 +24,6 @@ export default {
     return {
       loading: false,
       dialogVisible: this.isShow,
-      isSave: false,
       pages: {},
       comp: null,
       dialogWidth: ''
@@ -40,7 +39,10 @@ export default {
       this.component = this.pages[val];
     }
   },
+  created () {
+  },
   mounted () {
+    this.$bus.on('save', this.save);
     // form组件，（写在return里显示不出，可能是因为加载慢？）
     this.pages = {
       staff: { comp: Staff, width: '800px' },
@@ -50,6 +52,9 @@ export default {
     };
     this.comp = this.pages[this.page].comp;
     this.dialogWidth = this.pages[this.page].width;
+  },
+  beforeDestroy () {
+    this.$bus.off('save');
   },
   methods: {
     // 关闭
@@ -62,17 +67,12 @@ export default {
       this.close({ state: 'cancel' });
     },
     // 保存，提示子组件传递信息
-    save () {
-      this.isSave = true;
-    },
-    // 子组件数据不符合规则
-    notRule(){
-      this.isSave = false;
+    onSave () {
+      this.$bus.emit('readySave');
     },
     // 保存数据
-    onSave (info) {
+    save (info) {
       this.loading = true;
-      this.isSave = false;
       this.api.save(info)
         .then(() => {
           this.$message.success('保存成功!');

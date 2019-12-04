@@ -15,7 +15,7 @@
 
 export default {
   name: 'stock',
-  props: { info: Object, isSave: Boolean },
+  props: { info: Object},
   data () {
     return {
       modelInfo: {},
@@ -30,22 +30,20 @@ export default {
     info (val) {
       this.modelInfo = val;
     },
-    // 是否保存
-    isSave () {
-      if (this.isSave) {
-        this.save();
-      }
-    }
+  },
+  created () {
+    this.$bus.on('readySave', this.readySave);
   },
   mounted () { },
+  beforeDestroy(){
+    this.$bus.off('readySave');
+  },
   methods: {
     // 保存，向父组件传递数据，请父组件调用方法保存
-    save () {
+    readySave () {
       this.$refs.modelInfo.validate((valid) => {
         if (valid) {
-          this.$emit('saveInfo', this.modelInfo);
-        } else {
-          this.$emit('notRule');
+          this.$bus.emit('save', this.modelInfo);
         }
       });
     }

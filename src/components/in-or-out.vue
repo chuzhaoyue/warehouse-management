@@ -3,7 +3,7 @@
     <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="90px" :model="modelInfo">
       <el-form-item label="食品名称" prop="foodId">
         <el-select filterable v-model="modelInfo.foodId" placeholder="请选择">
-          <el-option v-for="item in foodInfo" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          <el-option v-for="item in foodInfo" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="数量" prop="quantity">
@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="操作人" prop="operatorId">
         <el-select filterable v-model="modelInfo.operatorId" placeholder="请选择">
-          <el-option v-for="item in operatorInfo" :key="item.id" :label="item.name" :value="item.id"></el-option>
+          <el-option v-for="item in operatorInfo" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -24,7 +24,7 @@ import StaffApi from '../api/basic/staff.api.js'
 
 export default {
   name: 'in-or-out',
-  props: { info: Object, isSave: Boolean },
+  props: { info: Object },
   data () {
     return {
       modelInfo: {},
@@ -44,17 +44,17 @@ export default {
     // form信息
     info (val) {
       this.modelInfo = val;
-    },
-    // 是否保存
-    isSave () {
-      if (this.isSave) {
-        this.save();
-      }
     }
+  },
+  created () {
+    this.$bus.on('readySave', this.readySave);
   },
   mounted () {
     this.getFoodInfo();
     this.getOperatorInfo();
+  },
+  beforeDestroy () {
+    this.$bus.off('readySave');
   },
   methods: {
     // 获取食品信息，用于select选项
@@ -74,12 +74,10 @@ export default {
         });
     },
     // 保存，向父组件传递数据，请父组件调用方法保存
-    save () {
+    readySave () {
       this.$refs.modelInfo.validate((valid) => {
         if (valid) {
-          this.$emit('saveInfo', this.modelInfo);
-        } else {
-          this.$emit('notRule');
+          this.$bus.emit('save', this.modelInfo);
         }
       });
     }

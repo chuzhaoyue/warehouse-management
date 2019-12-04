@@ -4,8 +4,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import router from './router/index.js';
 import './mock/index.mock';
+import VueBus from 'vue-bus';
+
 
 Vue.use(ElementUI);
+Vue.use(VueBus);
 
 Vue.config.productionTip = false;
 
