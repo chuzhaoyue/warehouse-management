@@ -107,7 +107,8 @@ const foods = [{
         id: j + 1,
         foodId: '@integer(1,9)',
         quantity: '@integer(60,100)',
-        operatorId: '@integer(1,5)'
+        operatorId: '@integer(1,5)',
+        time: '@now'
       }));
       win[j].foodName = wstock[win[j].foodId - 1].name;
       win[j].brand = wstock[win[j].foodId - 1].brand;
@@ -120,7 +121,8 @@ const foods = [{
         id: k + 1,
         foodId: '@integer(1,9)',
         quantity: '@integer(1,5)',
-        operatorId: '@integer(1,5)'
+        operatorId: '@integer(1,5)',
+        time: '@now'
       }));
       wout[k].foodName = wstock[wout[k].foodId - 1].name;
       wout[k].brand = wstock[wout[k].foodId - 1].brand;

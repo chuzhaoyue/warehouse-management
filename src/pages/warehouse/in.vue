@@ -24,7 +24,8 @@ export default {
           { prop: 'foodName', label: '食品名称', width: null },
           { prop: 'quantity', label: '数量', width: null },
           { prop: 'brand', label: '厂家', width: null },
-          { prop: 'operatorName', label: '操作人', width: null }
+          { prop: 'operatorName', label: '操作人', width: null },
+          { prop: 'time', label: '操作时间', width: null }
         ]
       }
     }

@@ -15,6 +15,20 @@ const allInfo = {
   Out: 'outInfo'
 };
 
+function addZero(n) {
+  return n > 9 ? n : '0' + n;
+}
+
+function getDate(time) {
+  const year = time.getFullYear();
+  const month = addZero(time.getMonth() + 1);
+  const date = addZero(time.getDate());
+  const hour = addZero(time.getHours());
+  const minute = addZero(time.getMinutes());
+  const second = addZero(time.getSeconds());
+  return year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
+}
+
 // 拦截Search
 Mock.mock(url.searchUrl, 'post', function (options) {
   // 判断请求的是哪个url（Staff/Stock/In/Out）
@@ -56,6 +70,8 @@ Mock.mock(url.saveUrl, 'put', function (options) {
     info.foodName = wstock[info.foodId - 1].name;
     info.brand = wstock[info.foodId - 1].brand;
     info.operatorName = wstaff[info.operatorId - 1].name;
+    // 设置操作时间
+    info.time = getDate(new Date());
     // 更新库存
     if (name === 'In') {
       wstock[win[info.id - 1].foodId - 1].stock -= win[info.id - 1].quantity;
@@ -84,6 +100,8 @@ Mock.mock(url.saveUrl, 'post', function (options) {
     info.foodName = wstock[info.foodId - 1].name;
     info.brand = wstock[info.foodId - 1].brand;
     info.operatorName = wstaff[info.operatorId - 1].name;
+    // 设置操作时间
+    info.time = getDate(new Date());
     if (name === 'In') {
       wstock[info.foodId - 1].stock = Number(wstock[info.foodId - 1].stock) + Number(info.quantity); // 更新库存
     } else {
@@ -105,7 +123,7 @@ Mock.mock(url.deleteUrl, 'delete', function (options) {
     let wstock = warehouseInfo.stockInfo;
     if (name === 'In') {
       let info = warehouseInfo.inInfo[id - 1]
-      wstock[info.foodId - 1].stock -=info.quantity; // 更新库存
+      wstock[info.foodId - 1].stock -= info.quantity; // 更新库存
     } else {
       let info = warehouseInfo.outInfo[id - 1]
       wstock[info.foodId - 1].stock = Number(wstock[info.foodId - 1].stock) + Number(info.quantity); // 更新库存
