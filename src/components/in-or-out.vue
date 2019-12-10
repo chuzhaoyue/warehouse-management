@@ -50,8 +50,6 @@ export default {
   },
   mounted () {
     this.getOptions();
-    // this.getFoodInfo();
-    // this.getOperatorInfo();
   },
   beforeDestroy () {
     this.$bus.off('readySave');

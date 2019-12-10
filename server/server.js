@@ -37,8 +37,7 @@ app.use(async (ctx, next) => {
     ctx.response.status = err.statusCode || err.status || 500;
     ctx.response.body = {
       code: 1,
-      message: 'server error',
-      err
+      message: 'server error'
     };
   }
 });
