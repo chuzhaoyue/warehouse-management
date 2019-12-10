@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-dialog :title="title" v-loading="loading" style="text-align:left" :width="dialogWidth" :visible.sync="dialogVisible" @close="cancel">
-      <!-- <in-or-out :info="info" :isSave="isSave" v-on:saveInfo="onSave"></in-or-out> -->
       <component :is="comp" :info="info"></component>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
@@ -74,10 +73,17 @@ export default {
     save (info) {
       this.loading = true;
       this.api.save(info)
-        .then(() => {
-          this.$message.success('保存成功!');
-          this.loading = false;
-          this.close({ state: 'save' });
+        .then((res) => {
+          if (res.data.code === '0') {
+            this.$message.success('保存成功!');
+            this.loading = false;
+            this.close({ state: 'save' });
+          } else {
+            this.$message.error('请求失败');
+          }
+        })
+        .catch(() => {
+          this.$message.error('请求失败');
         });
     }
   }

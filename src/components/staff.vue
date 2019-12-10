@@ -42,8 +42,8 @@
       </el-row>
       <el-row>
         <el-col :span="19" :offset="1">
-          <el-form-item label="地址" prop="add">
-            <el-input type="textarea" v-model="modelInfo.add"></el-input>
+          <el-form-item label="地址" prop="address">
+            <el-input type="textarea" v-model="modelInfo.address"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -81,7 +81,7 @@ export default {
           { required: true, message: '请输入电子邮箱', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
         ],
-        add: [{ required: true, message: '请输入地址', trigger: 'blur' }]
+        address: [{ required: true, message: '请输入地址', trigger: 'blur' }]
       }
     }
   },

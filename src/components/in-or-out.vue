@@ -3,7 +3,7 @@
     <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="90px" :model="modelInfo">
       <el-form-item label="食品名称" prop="foodId">
         <el-select filterable v-model="modelInfo.foodId" placeholder="请选择">
-          <el-option v-for="item in foodInfo" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          <el-option v-for="item in options.food" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="数量" prop="quantity">
@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="操作人" prop="operatorId">
         <el-select filterable v-model="modelInfo.operatorId" placeholder="请选择">
-          <el-option v-for="item in operatorInfo" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          <el-option v-for="item in options.staff" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -28,8 +28,7 @@ export default {
   data () {
     return {
       modelInfo: {},
-      foodInfo: [],
-      operatorInfo: [],
+      options: { food: [], staff: [] },
       rules: {
         foodId: [{ required: true, message: '请选择食品', trigger: 'change' }],
         quantity: [
@@ -50,27 +49,30 @@ export default {
     this.$bus.on('readySave', this.readySave);
   },
   mounted () {
-    this.getFoodInfo();
-    this.getOperatorInfo();
+    this.getOptions();
+    // this.getFoodInfo();
+    // this.getOperatorInfo();
   },
   beforeDestroy () {
     this.$bus.off('readySave');
   },
   methods: {
-    // 获取食品信息，用于select选项
-    getFoodInfo () {
-      StockApi.search(this.query)
-        .then((res) => {
-          // isDelete表示该数据已删除，不显示
-          this.foodInfo = res.data.filter(item => !item.isDelete);
-        });
-    },
-    // 获取员工信息，用于select选项
-    getOperatorInfo () {
-      StaffApi.search(this.query)
-        .then((res) => {
-          // isDelete表示该数据已删除，不显示
-          this.operatorInfo = res.data.filter(item => !item.isDelete);
+    // 获取options
+    getOptions () {
+      const promises = [];
+      promises.push(StockApi.select());
+      promises.push(StaffApi.select());
+      Promise.all(promises)
+        .then(([food, staff]) => {
+          if (food.data.code === '0' && staff.data.code === '0') {
+            this.options.food = food.data.data;
+            this.options.staff = staff.data.data;
+          } else {
+            this.$message.error('请求失败');
+          }
+        })
+        .catch(() => {
+          this.$message.error('请求失败');
         });
     },
     // 保存，向父组件传递数据，请父组件调用方法保存

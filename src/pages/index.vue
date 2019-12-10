@@ -1,7 +1,7 @@
 <template>
   <el-container class="wrapper">
     <el-aside class="sidebar" width="200px">
-      <el-header class="left-header">食品仓库管理</el-header>
+      <el-header height="50px" class="left-header">食品仓库管理</el-header>
       <el-menu class="el-menu-vertical-demo" router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu v-for="firstMenu in menuList" :key="firstMenu.path" :index="firstMenu.path">
           <template slot="title">
@@ -13,11 +13,10 @@
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header class="right-header">
+      <el-header height="50px" class="right-header">
         <el-breadcrumb separator="/" class="bread">
           <el-breadcrumb-item v-for="(item, index) in this.breadcrumb" :to="item.path" :key="index">{{ item.meta }}</el-breadcrumb-item>
         </el-breadcrumb>
-        <img class="mushroom" src="../assets/mushroom.png" alt="mushroom">
       </el-header>
       <el-main>
         <router-view></router-view>
@@ -79,7 +78,8 @@ export default {
   background-color: #545c64;
 }
 .el-header {
-  line-height: 60px;
+  /* height: 50px; */
+  line-height: 50px;
   border-bottom: 1px solid #eee;
 }
 .left-header {
@@ -95,12 +95,9 @@ export default {
 }
 .bread {
   height: 0px;
-  line-height: 60px;
+  line-height: 50px;
 }
-.mushroom {
-  float: right;
-  width: 30px;
-  height: 30px;
-  margin: 15px 20px 15px auto;
+.el-main{
+  padding: 15px;
 }
 </style>

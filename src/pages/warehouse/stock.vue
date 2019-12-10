@@ -21,9 +21,9 @@ export default {
         title: '食品信息编辑',
         api: StockApi,
         column: [
-          { prop: 'name', label: '名称', width: null },
-          { prop: 'brand', label: '厂家', width: null },
-          { prop: 'stock', label: '库存', width: null }
+          { prop: 'name', label: '名称', width: '100px' },
+          { prop: 'brand', label: '厂家', width: '100px' },
+          { prop: 'stock', label: '库存', width: '70px' }
         ]
       }
     }

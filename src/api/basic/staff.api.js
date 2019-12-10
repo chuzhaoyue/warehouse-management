@@ -2,7 +2,7 @@ import CommonApi from '../common.api';
 
 class StaffApi extends CommonApi {
   constructor() {
-    super('Staff');
+    super('staff');
   }
 }
 
