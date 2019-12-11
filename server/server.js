@@ -88,9 +88,9 @@ router.post('/*/search', async ctx => {
     infoSql += sqlKey;
     countSql += sqlKey;
   }
-  // if (apiName === 'inware' || apiName === 'outware') {
-  //   infoSql += ` ORDER BY time DESC`;
-  // }
+  if (apiName === 'inware' || apiName === 'outware') {
+    infoSql += ` ORDER BY time DESC`;
+  }
   infoSql += ` LIMIT ${(pagination.currentPage - 1) * pagination.pageSize}, ${pagination.pageSize}`;
   const data = await query(infoSql);
   const count = await query(countSql);
@@ -122,7 +122,8 @@ router.get('/*/single/:id', async ctx => {
 // select 查询
 router.get('/*/select', async ctx => {
   const apiName = ctx.url.split('/')[1];
-  const data = await query(`SELECT id,name FROM ${apiName} WHERE isDelete=0`);
+  let items = apiName === 'stock' ? `id,name,stock` : `id,name`;
+  const data = await query(`SELECT ${items} FROM ${apiName} WHERE isDelete=0`);
   ctx.body = {
     code: '0',
     message: 'OK',
@@ -183,11 +184,7 @@ router.put('/*/save', async ctx => {
   }
   let arr = [];
   for (let item in info) {
-    if (item !== 'id' && item !== 'time') {
-      arr[arr.length] = `${item}='${info[item]}'`;
-    } else if (item === 'time') {
-      arr[arr.length] = `time=now()`;
-    }
+    arr[arr.length] = (item !== 'id' && item !== 'time') ? `${item}='${info[item]}'` : `time=now()`;
   }
   let sql = `UPDATE ${apiName} SET ${arr.join()} WHERE id = '${info.id}'`;
   await query(sql);

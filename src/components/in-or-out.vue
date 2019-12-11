@@ -2,15 +2,15 @@
   <div>
     <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="90px" :model="modelInfo">
       <el-form-item label="食品名称" prop="foodId">
-        <el-select filterable v-model="modelInfo.foodId" placeholder="请选择">
+        <el-select filterable v-model="modelInfo.foodId" @change="getMax">
           <el-option v-for="item in options.food" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="数量" prop="quantity">
-        <el-input v-model="modelInfo.quantity"></el-input>
+        <el-input-number v-model="modelInfo.quantity" :precision="0" :min="1" :max="max"></el-input-number>
       </el-form-item>
       <el-form-item label="操作人" prop="operatorId">
-        <el-select filterable v-model="modelInfo.operatorId" placeholder="请选择">
+        <el-select filterable v-model="modelInfo.operatorId">
           <el-option v-for="item in options.staff" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
@@ -24,11 +24,13 @@ import StaffApi from '../api/basic/staff.api.js'
 
 export default {
   name: 'in-or-out',
-  props: { info: Object },
+  props: { page: String, info: Object },
   data () {
     return {
       modelInfo: {},
       options: { food: [], staff: [] },
+      isNew: true,
+      max: Infinity,
       rules: {
         foodId: [{ required: true, message: '请选择食品', trigger: 'change' }],
         quantity: [
@@ -43,6 +45,7 @@ export default {
     // form信息
     info (val) {
       this.modelInfo = val;
+      this.isNew = val.id ? false : true;
     }
   },
   created () {
@@ -63,7 +66,18 @@ export default {
       Promise.all(promises)
         .then(([food, staff]) => {
           if (food.data.code === '0' && staff.data.code === '0') {
-            this.options.food = food.data.data;
+            if (this.isNew) {
+              this.options.food = food.data.data;
+            } else {
+              // 获取 quantity 最大值
+              this.options.food = food.data.data.map(item => {
+                if (item.id == this.modelInfo.foodId) {
+                  item.stock += this.modelInfo.quantity;
+                }
+                return item;
+              });
+              this.getMax(this.modelInfo.foodId);
+            }
             this.options.staff = staff.data.data;
           } else {
             this.$message.error('请求失败');
@@ -72,6 +86,12 @@ export default {
         .catch(() => {
           this.$message.error('请求失败');
         });
+    },
+    getMax (id) {
+      if (this.page === 'out') {
+        this.max = this.options.food.filter(item => item.id == id)[0].stock;
+        this.modelInfo.quantity = this.modelInfo.quantity + 0.1;  // 为了触发 input-number 的 change
+      }
     },
     // 保存，向父组件传递数据，请父组件调用方法保存
     readySave () {

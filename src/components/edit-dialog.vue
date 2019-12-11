@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog :title="title" v-loading="loading" style="text-align:left" :width="dialogWidth" :visible.sync="dialogVisible" @close="cancel">
-      <component :is="comp" :info="info"></component>
+      <component :is="comp" :page="page" :info="info"></component>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="onSave">确 定</el-button>
