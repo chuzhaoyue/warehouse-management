@@ -35,5 +35,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
+div {
+  height: 100%;
+}
 </style>

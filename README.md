@@ -2,7 +2,7 @@
 
 ---
 >技术栈：   
-Vue3.0 + Element + Node.js + Koa2 + MySQL + ECharts   
+Vue + Element + Node.js + Koa2 + MySQL + ECharts   
 
 ---
 ## 效果展示：  
@@ -11,7 +11,7 @@ Vue3.0 + Element + Node.js + Koa2 + MySQL + ECharts
 ---
 ## 版本信息   
 
-*2019.12.11*     
+*2019.12.12*     
 **v2.0.1：** 改 bug
 
 *2019.12.08*     

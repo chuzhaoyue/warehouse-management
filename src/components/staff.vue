@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="90px" :model="modelInfo">
+    <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="5.3rem" :model="modelInfo">
       <el-row>
         <el-col :span="9" :offset="1">
           <el-form-item label="姓名" prop="name">

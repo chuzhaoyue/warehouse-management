@@ -1,17 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>食品仓库管理系统</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but warehouse-management doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>食品仓库管理系统</title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but warehouse-management doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>
+
+<style scoped>
+  html {
+    height: 100%;
+    font-size: 12px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media screen and (min-width: 1366px) {
+    html {
+      font-size: 16.01px;
+    }
+  }
+
+  @media screen and (min-width: 1440px) {
+    html {
+      font-size: 16.88px;
+    }
+  }
+
+  @media screen and (min-width: 1680px) {
+    html {
+      font-size: 19.69px;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    html {
+      font-size: 22.5px;
+    }
+  }
+
+  body {
+    margin: 0;
+    height: 100%;
+  }
+
+  #app {
+    height: 100%;
+  }
+
+  .ele_input .el-input__inner {
+    height: 2rem;
+    line-height: 2rem;
+  }
+
+  .ele_menu .el-submenu__title,
+  .ele_menu .el-menu-item {
+    height: 3.5rem;
+    line-height: 3.5rem;
+    font-size: 0.9rem;
+  }
+
+  .ele_fontsize_9 .el-input__inner,
+  .ele_fontsize_9 .el-button,
+  .ele_fontsize_9 .el-form-item__label,
+  .ele_fontsize_9 .el-pagination__total,
+  .ele_fontsize_9 .el-pager,
+  .ele_fontsize_9 .el-pagination__jump,
+  .ele_fontsize_9 .el-textarea__inner,
+  .ele_fontsize_9 .el-submenu__title,
+  .ele_fontsize_9 .el-menu-item {
+    font-size: 0.9rem !important;
+  }
+</style>

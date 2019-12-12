@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ele_fontsize_9">
     <el-dialog :title="title" v-loading="loading" style="text-align:left" :width="dialogWidth" :visible.sync="dialogVisible" @close="cancel">
       <component :is="comp" :page="page" :info="info"></component>
       <div slot="footer" class="dialog-footer">
@@ -44,10 +44,10 @@ export default {
     this.$bus.on('save', this.save);
     // form组件，（写在return里显示不出，可能是因为加载慢？）
     this.pages = {
-      staff: { comp: Staff, width: '800px' },
-      stock: { comp: Stock, width: '450px' },
-      in: { comp: InOrOut, width: '400px' },
-      out: { comp: InOrOut, width: '400px' }
+      staff: { comp: Staff, width: '47.4rem' },
+      stock: { comp: Stock, width: '26.7rem' },
+      in: { comp: InOrOut, width: '23.7rem' },
+      out: { comp: InOrOut, width: '23.7rem' }
     };
     this.comp = this.pages[this.page].comp;
     this.dialogWidth = this.pages[this.page].width;
@@ -91,4 +91,10 @@ export default {
 </script>
 
 <style scoped>
+.el-button{
+  width: 4rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0;
+}
 </style>

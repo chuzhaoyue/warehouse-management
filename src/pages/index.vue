@@ -1,8 +1,8 @@
 <template>
   <el-container class="wrapper">
-    <el-aside class="sidebar" width="200px">
-      <el-header height="50px" class="left-header">食品仓库管理</el-header>
-      <el-menu class="el-menu-vertical-demo" router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+    <el-aside class="sidebar ele_menu" width="12rem">
+      <el-header height="3rem" class="left-header">食品仓库管理</el-header>
+      <el-menu class="el-menu-vertical-demo ele_fontsize_9" router background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
         <el-submenu v-for="firstMenu in menuList" :key="firstMenu.path" :index="firstMenu.path">
           <template slot="title">
             <i :class="firstMenu.icon"></i>
@@ -13,7 +13,7 @@
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header height="50px" class="right-header">
+      <el-header height="3rem" class="right-header">
         <el-breadcrumb separator="/" class="bread">
           <el-breadcrumb-item v-for="(item, index) in this.breadcrumb" :to="item.path" :key="index">{{ item.meta }}</el-breadcrumb-item>
         </el-breadcrumb>
@@ -70,23 +70,30 @@ export default {
 
 <style scoped>
 .wrapper {
-  height: 705px;
+  height: 100%;
   border: 1px solid #eee;
 }
-.el-aside {
+.wrapper > .el-aside {
   color: #333;
   background-color: #545c64;
+  overflow: hidden;
+}
+.wrapper > .el-aside > .el-menu{
+  width: 12rem;
+}
+.wrapper > .el-container {
+  height: 100%;
 }
 .el-header {
   /* height: 50px; */
-  line-height: 50px;
+  line-height: 3rem;
   border-bottom: 1px solid #eee;
 }
 .left-header {
   background-color: #545c64;
   text-align: center;
   color: #fff;
-  font-size: 23px;
+  font-size: 1.36rem;
   font-weight: bolder;
 }
 .right-header {
@@ -95,9 +102,11 @@ export default {
 }
 .bread {
   height: 0px;
-  line-height: 50px;
+  line-height: 3rem;
+  font-size: 0.8rem;
 }
-.el-main{
+.wrapper > .el-container > .el-main {
+  height: 100%;
   padding: 15px;
 }
 </style>

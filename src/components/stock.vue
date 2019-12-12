@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="90px" :model="modelInfo">
+    <el-form label-suffix=":" :rules="rules" ref="modelInfo" label-width="5.3rem" :model="modelInfo">
       <el-form-item label="食品名称" prop="name">
         <el-input v-model="modelInfo.name"></el-input>
       </el-form-item>

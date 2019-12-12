@@ -35,4 +35,7 @@ export default {
 </script>
 
 <style scoped>
+div {
+  height: 100%;
+}
 </style>

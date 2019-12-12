@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  height: 600px;
+  height: 100%;
   display: flex;
   justify-content: center;
 }

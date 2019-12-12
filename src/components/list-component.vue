@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <header>
-      <el-input :placeholder="`可按${propsInfo.attr}搜索`" prefix-icon="el-icon-search" v-model="query.value" @change="getData()"></el-input>
-      <el-button type="primary" icon="el-icon-plus" class="addbtn" plain @click="edit">新增</el-button>
+  <div class="wrapper ele_fontsize_9">
+    <header class="ele_input">
+      <el-input :placeholder="`可按${propsInfo.attr}搜索`" v-model="query.value" @change="getData()"></el-input>
+      <el-button type="primary" class="addbtn" plain @click="edit">新增</el-button>
     </header>
     <main>
-      <el-table v-loading="loading" height="577px" :row-style="{height:'53px'}" :data="data" :header-cell-style="{background:'#F5F7FA'}" border style="width: 100%">
+      <el-table v-loading="loading" :header-row-style="{height:'1rem'}" :header-cell-style="{'padding-top':'0.5rem','padding-bottom':'0.5rem',background:'#F5F7FA'}" :row-style="{height:'1rem'}" :cell-style="{'padding-top':'0.5rem','padding-bottom':'0.5rem'}" :data="data" border style="width: 100%">
         <el-table-column type="index" :index="(query.pagination.currentPage - 1) * query.pagination.pageSize + 1">
         </el-table-column>
         <el-table-column v-for="(item, index) in propsInfo.column" :key="index" :prop="item.prop" :label="item.label" :min-width="item.width"></el-table-column>
-        <el-table-column label="操作" width="110px">
+        <el-table-column label="操作" min-width="110px">
           <template slot-scope="scope">
             <el-button-group v-show="(propsInfo.page != 'in' && propsInfo.page!='out') || scope.row.editable">
               <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row.id)" plain></el-button>
@@ -21,8 +21,10 @@
       <edit-dialog :page="propsInfo.page" :title="propsInfo.title" :api="propsInfo.api" :info="dialog.info" :isShow="dialog.isShow" @closeDialog="closeDialog"></edit-dialog>
     </main>
     <footer>
-      <el-pagination @current-change="handleCurrentChange" :current-page="query.pagination.currentPage" :page-size="query.pagination.pageSize" :total="query.pagination.total" layout="total, prev, pager, next, jumper">
-      </el-pagination>
+      <div class="pagination">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="query.pagination.currentPage" :page-sizes="[5, 10, 15]" :page-size="query.pagination.pageSize" :total="query.pagination.total" layout="total, sizes, prev, pager, next, jumper">
+        </el-pagination>
+      </div>
     </footer>
   </div>
 </template>
@@ -67,6 +69,10 @@ export default {
     },
     handleCurrentChange (val) {
       this.query.pagination.currentPage = val;
+      this.getData();
+    },
+    handleSizeChange (val) {
+      this.query.pagination.pageSize = val;
       this.getData();
     },
     edit (id) {
@@ -116,16 +122,40 @@ export default {
 </script>
 
 <style scoped>
-header {
-  position: absolute;
-  right: 122px;
-  top: 13px;
+.wrapper {
+  height: 100%;
 }
-.el-input {
-  width: 200px;
+.wrapper > header {
+  position: absolute;
+  right: 10rem;
+  top: 0.5rem;
+}
+.wrapper > main {
+  height: 90%;
+  overflow: auto;
+}
+.wrapper > header > .el-input {
+  width: 12rem;
   margin-right: 20px;
 }
-footer {
+.wrapper > header > .el-button {
+  width: 4rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0;
+}
+.el-table {
+  font-size: 0.9rem;
+}
+.wrapper > footer {
+  height: 10%;
+  position: relative;
+}
+.pagination {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
   display: flex;
   justify-content: center;
   padding-top: 10px;
