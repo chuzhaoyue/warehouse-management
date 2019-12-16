@@ -11,7 +11,7 @@ Vue + Element + Node.js + Koa2 + MySQL + ECharts
 ---
 ## 版本信息   
 
-*2019.12.12*     
+*2019.12.16*     
 **v2.0.1：** 改 bug
 
 *2019.12.08*     
