@@ -71,7 +71,6 @@ export default {
 <style scoped>
 .wrapper {
   height: 100%;
-  border: 1px solid #eee;
 }
 .wrapper > .el-aside {
   color: #333;
@@ -85,7 +84,6 @@ export default {
   height: 100%;
 }
 .el-header {
-  /* height: 50px; */
   line-height: 3rem;
   border-bottom: 1px solid #eee;
 }
